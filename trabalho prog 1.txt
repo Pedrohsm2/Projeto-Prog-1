@@ -1,0 +1,209 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int main(void) {
+  char nomes[3][30];
+  char sexos[3];
+  float valorT[3];
+  int comp = 0;
+  int comp1 = 0;
+  int menu = 0;
+  char copia[30];
+  char resposta1;
+  char pesquisaNome[30];
+  int qtdHom = 0;
+  int qtdMul = 0;
+  float media = 0;
+  float soma = 0;
+  float valorHom = 0;
+  float menorCompra = 0;
+  float compraIt4 = 0;
+  int qtdCompraIt4 = 0;
+  int qtdCompraIt4_2 =0;
+  int verif = 0;
+  
+
+  printf("\n");
+  printf("\n");
+  printf("\n");
+  printf("===================== GERENCIADOR DE SUPERMERCADO =====================");
+  printf("\n");
+  printf("\n");
+  printf("\n");
+
+  for (int i = 0; i < 3; i++) {
+    printf("\nDigite o nome do cliente: ");
+    scanf("%s", nomes[i]);
+
+    for (int j = 0; j < i; j++) {
+
+      comp = strcmp(nomes[i], nomes[j]);
+
+      while (comp == 0) {
+        printf("\n**** ERRO - O NOME DIGITADO JA ESTA CADASTRADO ****\n");
+
+        printf("\nDigite o nome do cliente novamente: ");
+        scanf("%s", nomes[i]);
+
+        j = 0;
+
+        comp = strcmp(nomes[i], nomes[j]);
+      }
+    }
+    
+    printf("\nDigite o sexo do cliente (m = masculino, f = feminino): ");
+    scanf(" %c", &sexos[i]);
+
+    while((sexos[i] != 'm') && (sexos[i] != 'f')){
+      printf("\n**** ERRO - SEXO INVÁLIDO ****\n");
+      
+      printf("\nDigite o sexo do cliente novamente (m = masculino, f = feminino): ");
+      scanf(" %c", &sexos[i]);
+    }
+
+    if(sexos[i] == 'm'){
+      qtdHom++;
+    }
+    else{
+      qtdMul++;
+    }
+
+    printf("\nDigite o valor total da compra: ");
+    scanf("%f", &valorT[i]);
+
+
+    while(valorT[i] < 0) {
+      printf("\n**** ERRO - O VALOR INFORMADO NÃO É VALIDO ****\n");
+
+      printf("\nDigite o valor total da compra novamente: ");
+      scanf("%f", &valorT[i]);
+    }
+
+    soma = soma + valorT[i];
+
+    if(sexos[i] == 'm'){
+      valorHom = valorHom + valorT[i];
+    }
+
+    if (menorCompra == 0) {
+      menorCompra = valorT[i];
+    } 
+    else {
+      if (valorT[i] < menorCompra) {
+        menorCompra = valorT[i];
+      } 
+    }
+
+    printf("\n=======================================================================");
+    printf("\n");
+    printf("\n                     CLIENTE CADASTRADO COM SUCESSO");
+    printf("\n");
+    printf("\n=======================================================================");
+    printf("\n");
+  }
+  
+  printf("\n=======================================================================");
+  printf("\n");
+  printf("\n                            CADASTRO COMPLETO");
+  printf("\n");
+  printf("\n=======================================================================");
+  printf("\n=======================================================================");
+
+  
+
+
+  do{
+    system("clear");
+  
+    printf("\n=======================================================================");
+    printf("\n");
+    printf("\n                            MENU PRINCIPAL");
+    printf("\n");
+    printf("\n=======================================================================");
+  
+    printf("\n");
+    printf("\n");
+    printf("\n");
+
+
+    
+    printf("\n(1) VER INFORMAÇÕES DE COMPRA DE UM CLIENTE \n(2) VER INFORMAÇÕES DOS PRODUTOS   CADASTRADOS \n(3) ENCERRAR O PROGRAMA \n -- ");
+    scanf("%d", &menu);
+
+  
+    switch(menu){
+      case 1:
+        printf("\n=======================================================================");
+        printf("\n");
+        printf("\n                            INFORMAÇÃO DE COMPRA");
+        printf("\n");
+        printf("\n=======================================================================");
+        printf("\n");
+
+        printf("\nDigite o nome do cliente: ");
+        scanf("%s", pesquisaNome);
+        
+        for(int i=0; i<3; i++){
+
+          comp1 = strcmp(nomes[i], pesquisaNome);
+
+          if(comp1 == 0){
+            printf("\nNome informado: %s \n", nomes[i]);
+            printf("\nSexo do cliente: %c \n", sexos[i]);
+            printf("\nValor da compra: %.2f \n", valorT[i]);
+
+            verif = 1;
+          }
+
+          
+        }
+        
+        if(verif != 1){
+            printf("\n**** ERRO - O NOME INFORMADO NÃO ESTA CADASTRADO ****\n");
+          }
+
+        verif = 0;
+        
+        ; break;
+        
+      case 2:
+        printf("\nDigite um valor (serão mostradas a quantidade de compras abaixo desse valor): ");
+        scanf("%f", &compraIt4);
+
+        for(int i=0; i<3; i++){
+
+          if(valorT[i] < compraIt4){
+            qtdCompraIt4++;
+          }
+          else{
+            qtdCompraIt4_2++;
+          }    
+        }
+
+        media = soma / 3;
+        
+        printf("\nQuantidade de compras abaixo do valor indicado: %d", qtdCompraIt4);
+        printf("\nQuantidade de compras acima do valor indicado: %d", qtdCompraIt4_2);
+        printf("\nQuantidade de compradoras mulheres: %d", qtdMul);
+        printf("\nValor total comprado pelos homens: %.2f", valorHom);
+        printf("\nValor total de todas as compras: %.2f", soma);
+        printf("\nValor médio das compras: %.2f", media);
+        printf("\nValor da compra mais barata: %.2f", menorCompra);      break;
+
+      case 3:
+        printf("PROGRAMA ENCERRADO..."); exit(0);
+
+      default:
+          printf("\n**** ERRO - OPÇÃO INVÁLIDA ****");   
+    }
+
+    printf("\nDESEJA RETORNAR AO MENU PRINCIPAL? (s = sim, n = não): ");
+    scanf(" %c", &resposta1);
+    
+  }while(resposta1 == 's');
+
+  printf("PROGRAMA ENCERRADO..."); exit(0);
+
+  return 0;
+}
